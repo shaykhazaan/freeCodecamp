@@ -1,0 +1,41 @@
+body{
+	margin: 0;
+	background-color: whitesmoke;
+    box-sizing: border-box;
+    
+}
+
+nav{
+    background-color: rgb(10, 10, 35); 
+    font-family: Lato,sans-serif;
+    font-size: 18px; 
+    padding: 0 15px;
+    height: 38px;
+}
+
+.menu {
+    box-sizing: border-box;
+    text-shadow: none!important;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    font-size: 18px;
+    font-family: Roboto Mono,monospace!important;
+    justify-content: center;
+    vertical-align: middle;
+    
+    padding: 0px 12px;
+    background-color: #feac32;
+    background-image: linear-gradient(#fecc4c,#ffac33);
+    border-color: #feac32;
+    border-width: 3px;
+    color: #0a0a23!important;
+    
+}
+a:hover {
+    background-color: #fecc4c;
+    background-image: none;
+}
+
+
+
