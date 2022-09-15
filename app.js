@@ -1,15 +1,27 @@
 const express = require('express');
+const session = require('express-session');
+const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 
+const isAuth = require('./middleware/is-auth');
+
 const authRoutes = require('./routes/auth');
 //const txnController = require('./controllers/transaction');
 
-const isAuth = require('./middleware/is-auth');
+
+const passport = require('passport');
+const { cookie } = require('express-validator');
+require('./middleware/auth-google');
 
 const app = express();
+
+app.use(cookieParser());
+app.use(session({secret: 'secretkey'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -31,7 +43,27 @@ app.use('/auth', authRoutes);
 
 app.get('/', (req, res, next) => {
   res.render('index');
-  console.log(req);
+});
+
+app.get('/google/callback',
+    passport.authenticate('google', {
+        successRedirect: '/protected',
+        failureRedirect: '/auth/failure'
+    })
+);
+
+app.get('/protected', isAuth,  (req, res, next) => {
+  res.send(`Hello <b><i></i></b><br><h2>This is a success msg</h2>`);
+  // console.log(req.user);
+});
+
+app.get('/logout', (req, res) => {
+  
+  // res.clearCookie('jwt');
+  // res.clearCookie('connect.sid');
+  delete req.user['jwt'];
+  res.send('Logged Out!');
+  
 });
 
 app.use((error, req, res, next) => {

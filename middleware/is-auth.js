@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const { cookie } = require('express-validator');
 
 module.exports = (req, res, next) => {
-    const token = req.body.accessToken;
+    let token = req.cookies.jwt || req.user.jwt || undefined;
     if(!token) {
         const error = new Error('Not Authenticated');
         error.statusCode = 401;

@@ -47,6 +47,9 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getSignin = (req, res, next) => {
+  // if (req.cookies.jwt || req.user.jwt){
+  //   res.redirect('/protected');
+  // }
   res.render('auth/signin');
 }
 
@@ -76,7 +79,7 @@ exports.postSignin = (req, res, next) => {
             userId: loadedUser._id.toString()
           }, 
           'accessTokenKey', 
-          {expiresIn: '1m'}  //expiry of the token is 5 minutes
+          {expiresIn: '7d'}  //expiry of the token is 7 days
         );
         const refreshToken = jwt.sign(
           {
@@ -86,7 +89,11 @@ exports.postSignin = (req, res, next) => {
           'refreshTokenKey',
           { expiresIn: '5m'}  //expiry of the token is 5 minutes
         );
-        res.status(200).send({message: 'logged in successfully', accessToken: token, refreshToken: refreshToken});
+        
+        res.cookie('jwt',token);
+        res.status(200).redirect('/protected');
+        
+        //.send({message: 'logged in successfully', accessToken: token, refreshToken: refreshToken});
     })
     .catch(err => {
       if(!err.statusCode) {
