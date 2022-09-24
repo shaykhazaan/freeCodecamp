@@ -1,15 +1,24 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator/check');
 
 exports.getSignup = (req, res, next) => {
   res.render('auth/signup');
 }
 
 exports.postSignup = (req, res, next) => {
+  let errorMessage = '00000000';
     const name = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      console.log(errors.array());
+      return res.status(422).render('auth/signin', {
+        errorMessage: errors.array()
+      });
+    }
     bcrypt
       .hash(password, 12)
       .then(hashedPw => {

@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const courseSchema = new schema({
-    courseTitle: {
+    Title: {
         type: String,
         required: true
     },
-    duration: {
+    Duration: {
         type: String,
         required: true
     }

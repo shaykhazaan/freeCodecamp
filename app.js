@@ -10,6 +10,7 @@ const isAuth = require('./middleware/is-auth');
 
 const authRoutes = require('./routes/auth');
 //const txnController = require('./controllers/transaction');
+const courseController = require('./controllers/course');
 
 
 const passport = require('passport');
@@ -42,7 +43,7 @@ app.use((req, res, next) => {
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res, next) => {
-  res.render('index');
+  res.render('index', {pageTitle: 'freeCodeCamp'});
 });
 
 app.get('/google/callback',
@@ -52,8 +53,10 @@ app.get('/google/callback',
     })
 );
 
+app.get('/learn', courseController.getCourses);
+
 app.get('/protected', isAuth,  (req, res, next) => {
-  res.send(`Hello <b><i></i></b><br><h2>This is a success msg</h2>`);
+  res.send(`Hello <b><i></i></b><br><h2>This is a jwt authenticated page.</h2>`);
   // console.log(req.user);
 });
 
