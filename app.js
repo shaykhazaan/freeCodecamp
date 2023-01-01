@@ -62,9 +62,9 @@ app.get('/protected', isAuth,  (req, res, next) => {
 
 app.get('/logout', (req, res) => {
   
-  // res.clearCookie('jwt');
+  res.clearCookie('jwt');
   // res.clearCookie('connect.sid');
-  delete req.user['jwt'];
+  //delete req.user['jwt'];
   res.send('Logged Out!');
   
 });

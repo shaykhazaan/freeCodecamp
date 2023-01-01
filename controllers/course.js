@@ -4,7 +4,6 @@ exports.getCourses = (req, res, next) => {
    
     Course.find()
     .then( data => {
-        console.log(data);
         res.render('learn', {
             pageTitle: 'Learn to Code',
             courseData: data

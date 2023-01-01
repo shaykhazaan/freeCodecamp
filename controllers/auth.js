@@ -59,7 +59,7 @@ exports.getSignin = (req, res, next) => {
   // if (req.cookies.jwt || req.user.jwt){
   //   res.redirect('/protected');
   // }
-  res.render('auth/signin');
+  res.render('auth/signin', {errorMessage: validationResult.errorMessage});
 }
 
 exports.postSignin = (req, res, next) => {
